@@ -1,0 +1,200 @@
+/**
+ * Gridpak Beta SCSS 
+ *
+ * Generator - http://gridpak.com/
+ * Created by @erskinedesign
+ */
+
+/* Reusable column setup */
+
+.row {
+    @include clearfix;
+}
+
+@mixin col {
+    border:0px solid rgba(0,0,0,0);
+    float:left;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+    -moz-background-clip:padding-box !important;
+    -webkit-background-clip:padding-box !important;
+    background-clip:padding-box !important;
+}
+
+.col {
+   @include col;
+}
+
+@mixin span($num, $gutter_pc, $gutter_px, $padding, $max_columns) {
+    $one_col: (100% - ($gutter_pc * ($max_columns - 1))) / $max_columns;
+    width:($one_col * $num) + ($gutter_pc * ($num - 1));
+    border-left-width:$gutter_px;
+    padding:$padding;
+    margin-left:$gutter_pc;
+}
+
+@mixin offset($num, $gutter_pc, $gutter_px, $padding, $max_columns) {
+    $one_col: (100% - ($gutter_pc * ($max_columns - 1))) / $max_columns;
+    margin-left: $gutter_pc + ($one_col * $num) + ($gutter_pc * ($num - 1)) !important;
+}
+
+@mixin span-first {
+    margin-left:0;
+}
+ 
+
+    /* 1. 16 Column Grid 0px - Infinity 
+    ----------------------------------------------------------------------------- 
+    
+    Span 1:    5.3125%
+    Span 2:    11.625%
+    Span 3:    17.9375%
+    Span 4:    24.25%
+    Span 5:    30.5625%
+    Span 6:    36.875%
+    Span 7:    43.1875%
+    Span 8:    49.5%
+    Span 9:    55.8125%
+    Span 10:    62.125%
+    Span 11:    68.4375%
+    Span 12:    74.75%
+    Span 13:    81.0625%
+    Span 14:    87.375%
+    Span 15:    93.6875%
+    Span 16:    100%
+    
+    ----------------------------------------------------------------------------- */	
+    
+    @include respond($desktopMin) {
+        
+        /* --- Gridpak variables ---*/ 
+        $max_columns: 16;
+        $padding: 0 0%;
+        $gutter_px: 0;
+        $gutter_pc: 2%;
+        
+        .col {
+            margin-left:$gutter_pc;
+            padding:0 0%;
+        }
+                
+        .row .col:first-child {
+            @include span_first;
+        }
+        
+        
+        /*
+        Add your semantic classnames in alongside their corresponding spans here. e.g.
+        
+        .span-3,
+        .my_semantic_class_name {
+            ...
+        }
+        
+        */
+        .span-1 {
+            @include span(1, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-2 {
+            @include span(2, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-3 {
+            @include span(3, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-4 {
+            @include span(4, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-5 {
+            @include span(5, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-6 {
+            @include span(6, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-7 {
+            @include span(7, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-8 {
+            @include span(8, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-9 {
+            @include span(9, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-10 {
+            @include span(10, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-11 {
+            @include span(11, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-12 {
+            @include span(12, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-13 {
+            @include span(13, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-14 {
+            @include span(14, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-15 {
+            @include span(15, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .span-16 {
+            @include span_first;
+            width:100%;
+        }
+
+        .offset-1 {
+            @include offset(1, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-2 {
+            @include offset(2, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-3 {
+            @include offset(3, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-4 {
+            @include offset(4, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-5 {
+            @include offset(5, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-6 {
+            @include offset(6, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-7 {
+            @include offset(7, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-8 {
+            @include offset(8, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-9 {
+            @include offset(9, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-10 {
+            @include offset(10, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-11 {
+            @include offset(11, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-12 {
+            @include offset(12, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-13 {
+            @include offset(13, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-14 {
+            @include offset(14, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+        .offset-15 {
+            @include offset(15, $gutter_pc, $gutter_px, $padding, $max_columns);
+        }
+
+
+        .grid-demo .col {
+           background-color: rgba(255,0,0,0.3);
+           min-height: 200px;            
+        }
+
+
+    }
+ 

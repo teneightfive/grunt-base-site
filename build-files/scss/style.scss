@@ -1,0 +1,24 @@
+// Compiles to /assets/css/style.css
+
+// Include COMPASS (if required)
+@import "compass";
+
+// SHARED
+@import 
+		"core/mixins",
+		"core/variables",
+		"core/breakpoints",
+		"core/normalize",
+		"core/typography",
+		"core/icons",
+		"core/grid";
+		
+// MODULES
+@import
+		"mod/main",
+		"mod/header",
+		"mod/footer";
+		
+// COMPONENTS
+//@import
+		//"cpt/";

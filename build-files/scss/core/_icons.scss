@@ -1,0 +1,38 @@
+/*
+&#xe000;	icon name
+*/
+
+@font-face {
+	font-family: 'icons';
+	font-weight: normal;
+	font-style: normal;
+	src: url('../fonts/icomoon.eot');
+	src: url('../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/icomoon.woff') format('woff'),
+		url('../fonts/icomoon.ttf') format('truetype'),
+		url('../fonts/icomoon.svg#wf') format('svg');
+}
+
+[data-icon] {
+	font-family: 'icons';
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;	
+}
+
+// Decent browsers use the before element - so no non-semantic chars in DOM
+[data-icon]:before {
+	content: attr(data-icon);
+}
+
+// IE8 can't cope with UTF8 chars in the content attr of a pseudo element
+// So there's a javascript fix to write them to the DOM
+html.lt-ie9 {
+	[data-icon]:before {
+		content: "" !important;
+		display: none;
+	}
+}
