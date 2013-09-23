@@ -1,6 +1,4 @@
-// BACKGROUND
-$body-bg: #fafafa;
-$main-bg: #fff;
+//COLOURS
 
 
 //ANCHOR
@@ -8,13 +6,19 @@ $anchor:#fff;
 $anchor-hover:#A92718;
 
 
-//COLOURS
-
-
 //BORDERS
 $border: #d1d1d1;
 $border-width: 1px;
 $border-radius: 0;
+
+
+// BACKGROUND
+//$body-bg: ;
+$main-bg: #fff;
+
+
+// Base Font Size
+$em-base: 16px; // must be set to use emCalc function
 
 
 // Body text
