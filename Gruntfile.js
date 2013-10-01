@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 			},
 			js: {
 				files: ['build-files/js/**'],
-				tasks: ['concat:javascript'],
+				tasks: ['jst', 'concat:javascript'],
 			}
 		},
 		clean: {
@@ -39,6 +39,24 @@ module.exports = function(grunt) {
 					//basePath: 'build-files/scss/',
 					environment: 'production',
 					config: 'build-files/config.rb'
+				}
+			}
+		},
+		jst: {
+			compile: {
+				options: {
+					namespace: "sant",
+					prettify: false,
+		            amdWrapper: false,
+		            templateSettings: {
+		            },
+		            processName: function(filename) {
+		                //Shortens the file path for the template.
+		                return filename.slice(filename.indexOf("templates")+10, filename.length);
+		            }
+				},
+				files: {
+					"build-files/js/templates.js": ["build-files/js/templates/*.tpl"]
 				}
 			}
 		},
@@ -73,10 +91,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-compass');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
+	grunt.loadNpmTasks('grunt-contrib-jst');
 	
 	// Default task(s).
 	grunt.registerTask('default', ['watch']);
-	//grunt.registerTask('watch', ['watch']);
-	grunt.registerTask('build', ['clean:build', 'compass:production', 'concat:javascript', 'uglify:javascript', 'imagemin:production']);
+	grunt.registerTask('build-dev', ['clean:build', 'compass:development', 'jst', 'concat:javascript', 'uglify:javascript', 'imagemin:production']);
+	grunt.registerTask('build', ['clean:build', 'compass:production', 'jst', 'concat:javascript', 'uglify:javascript', 'imagemin:production']);
 
 };
