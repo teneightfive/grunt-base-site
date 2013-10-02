@@ -1,0 +1,21 @@
+# Ignore OS Related/Generic
+Thumbs.db
+Desktop.ini
+node_modules
+npm-debug.log
+.sass-cache
+._*
+Icon?
+.DS_Store
+*.bak
+*.tmproj
+*.tmproject
+*~
+
+# IDEs project files/settings
+nbproject/
+nbactions.xml
+.settings/
+.project
+.metadata
+.properties
