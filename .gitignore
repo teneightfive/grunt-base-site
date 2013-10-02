@@ -21,6 +21,6 @@ nbactions.xml
 .properties
 
 # Ignore files that are built with Grunt
-#assets/css
-#assets/js/application.js
-#assets/js/application.min.js
+assets/css
+assets/js/application.js
+assets/js/application.min.js
