@@ -5,11 +5,11 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		watch: {
 			css: {
-				files: ['build-files/scss/*.scss', 'build-files/scss/**/*.scss'],
+				files: ['src/scss/*.scss', 'src/scss/**/*.scss'],
 				tasks: ['compass:development'],
 			},
 			js: {
-				files: ['build-files/js/**'],
+				files: ['src/js/**'],
 				tasks: ['jst', 'concat:javascript'],
 			}
 		},
@@ -29,16 +29,16 @@ module.exports = function(grunt) {
 		compass: {
 			development: {
 				options: {
-					//basePath: 'build-files/scss/',
+					//basePath: 'src/scss/',
 					environment: 'development',
-					config: 'build-files/config.rb'
+					config: 'src/config.rb'
 				}
 			},
 			production: {
 				options: {
-					//basePath: 'build-files/scss/',
+					//basePath: 'src/scss/',
 					environment: 'production',
-					config: 'build-files/config.rb'
+					config: 'src/config.rb'
 				}
 			}
 		},
@@ -56,7 +56,7 @@ module.exports = function(grunt) {
 		            }
 				},
 				files: {
-					"build-files/js/templates.js": ["build-files/js/templates/*.tpl"]
+					"src/js/templates.js": ["src/js/template/*.tpl"]
 				}
 			}
 		},
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
 			},
 			javascript: {
 				// the files to concatenate
-				src: ['build-files/js/plugins/*.js', 'build-files/js/cpts/*.js', 'build-files/*.js'],
+				src: ['src/js/plugin/*.js', 'src/js/cpt/*.js', 'src/*.js'],
 				// the location of the resulting JS file
 				dest: 'assets/js/application.js'
 			}
