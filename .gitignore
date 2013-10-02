@@ -19,3 +19,8 @@ nbactions.xml
 .project
 .metadata
 .properties
+
+# Ignore files that are built with Grunt
+#assets/css
+#assets/js/application.js
+#assets/js/application.min.js
