@@ -3,6 +3,7 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		// Create watch task to watch Sass and JS directories during Dev
 		watch: {
 			css: {
 				files: ['src/scss/*.scss', 'src/scss/**/*.scss'],
@@ -13,9 +14,11 @@ module.exports = function(grunt) {
 				tasks: ['jst', 'concat:javascript'],
 			}
 		},
+		// Empty out CSS and JS directories so they are clean for Grunt to compile correct files
 		clean: {
 			build: ['assets/css', 'assets/js/*.js']
 		},
+		// Optimise images for production environment
 		imagemin: {
 			production: {
 				options: {
@@ -26,6 +29,8 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		// Compass task to compile Sass using the Compass mixin library
+		// Compass settings are stored in src/config.rb
 		compass: {
 			development: {
 				options: {
@@ -42,10 +47,11 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		// JavaScript Template compiler - save all templates as one file and allow them to be acccess as objects
 		jst: {
 			compile: {
 				options: {
-					namespace: "sant",
+					namespace: "templates",
 					prettify: false,
 		            amdWrapper: false,
 		            templateSettings: {
@@ -60,6 +66,7 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		// Concatinate all the JavaScript files to reduce amount of requests
 		concat: {
 			options: {
 				// define a string to put between each file in the concatenated output
@@ -72,6 +79,8 @@ module.exports = function(grunt) {
 				dest: 'assets/js/application.js'
 			}
 		},
+		// Minify JavaScript files to reduce page weight
+		// Only used for production environment
 		uglify: {
 			options: {
 				
