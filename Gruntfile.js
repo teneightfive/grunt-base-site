@@ -62,7 +62,7 @@ module.exports = function(grunt) {
 		            }
 				},
 				files: {
-					"src/js/templates.js": ["src/js/template/*.tpl"]
+					'src/js/templates.js': ['src/js/template/*.tpl']
 				}
 			}
 		},
