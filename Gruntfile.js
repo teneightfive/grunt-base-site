@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-	
+
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -11,12 +11,13 @@ module.exports = function(grunt) {
 			},
 			js: {
 				files: ['src/js/**'],
-				tasks: ['jst', 'concat:javascript'],
+				tasks: ['jst', 'concat:javascript', 'clean:postBuild'],
 			}
 		},
 		// Empty out CSS and JS directories so they are clean for Grunt to compile correct files
 		clean: {
-			build: ['assets/css', 'assets/js/*.js']
+			preBuild: ['assets/css', 'assets/js/*.js'],
+			postBuild: ['build-files/js/templates.js']
 		},
 		// Optimise images for production environment
 		imagemin: {
@@ -24,9 +25,12 @@ module.exports = function(grunt) {
 				options: {
 					optimizationLevel: 5
 				},
-				files: {
-					'assets/img/**' : 'assets/img/**'
-				}
+				files: [{
+					expand: true,
+					cwd: 'assets/img',
+					src: ['**/*.{png,jpg,gif}'],
+					dest: 'assets/img'
+				}]
 			}
 		},
 		// Compass task to compile Sass using the Compass mixin library
@@ -34,14 +38,12 @@ module.exports = function(grunt) {
 		compass: {
 			development: {
 				options: {
-					//basePath: 'src/scss/',
 					environment: 'development',
 					config: 'src/config.rb'
 				}
 			},
 			production: {
 				options: {
-					//basePath: 'src/scss/',
 					environment: 'production',
 					config: 'src/config.rb'
 				}
@@ -53,13 +55,13 @@ module.exports = function(grunt) {
 				options: {
 					namespace: "templates",
 					prettify: false,
-		            amdWrapper: false,
-		            templateSettings: {
-		            },
-		            processName: function(filename) {
-		                //Shortens the file path for the template.
-		                return filename.slice(filename.indexOf("templates")+10, filename.length);
-		            }
+					amdWrapper: false,
+					templateSettings: {
+					},
+					processName: function(filename) {
+						//Shortens the file path for the template.
+						return filename.slice(filename.indexOf("templates")+10, filename.length);
+					}
 				},
 				files: {
 					'src/js/templates.js': ['src/js/template/*.tpl']
@@ -83,7 +85,7 @@ module.exports = function(grunt) {
 		// Only used for production environment
 		uglify: {
 			options: {
-				
+
 			},
 			javascript: {
 				files: {
@@ -92,7 +94,7 @@ module.exports = function(grunt) {
 			}
 		}
 	});
-	
+
 	// Load plugins
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -101,10 +103,25 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-compass');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
 	grunt.loadNpmTasks('grunt-contrib-jst');
-	
+
 	// Default task(s).
 	grunt.registerTask('default', ['watch']);
-	grunt.registerTask('build-dev', ['clean:build', 'compass:development', 'jst', 'concat:javascript', 'uglify:javascript', 'imagemin:production']);
-	grunt.registerTask('build', ['clean:build', 'compass:production', 'jst', 'concat:javascript', 'uglify:javascript', 'imagemin:production']);
+	grunt.registerTask('build-dev', [
+		'clean:build',
+		'compass:development',
+		'jst',
+		'concat:javascript',
+		'uglify:javascript',
+		'imagemin:production'
+	]);
 
+	grunt.registerTask('build', [
+		'clean:preBuild',
+		'compass:production',
+		'jst',
+		'concat:javascript',
+		'uglify:javascript',
+		'imagemin:production',
+		'clean:postBuild'
+	]);
 };
