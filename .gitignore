@@ -11,6 +11,7 @@ Icon?
 *.tmproj
 *.tmproject
 *~
+*.sublime-*
 
 # IDEs project files/settings
 nbproject/
