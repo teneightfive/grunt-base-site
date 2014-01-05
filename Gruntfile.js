@@ -1,4 +1,8 @@
 module.exports = function(grunt) {
+  'use strict';
+
+  // Load all plugins
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
 	// Project configuration.
 	grunt.initConfig({
@@ -9,15 +13,19 @@ module.exports = function(grunt) {
 				files: ['src/scss/*.scss', 'src/scss/**/*.scss'],
 				tasks: ['compass:development'],
 			},
-			js: {
-				files: ['src/js/**'],
-				tasks: ['jst', 'concat:javascript', 'clean:postBuild'],
-			}
+      templates: {
+        files: ['src/js/tpl/*'],
+        tasks: ['jst', 'concat:javascript', 'clean:postBuild'],
+      },
+      js: {
+        files: ['Gruntfile.js', 'src/js/mod/*', 'src/js/*.js'],
+        tasks: ['jshint', 'concat:javascript'],
+      }
 		},
 		// Empty out CSS and JS directories so they are clean for Grunt to compile correct files
 		clean: {
 			preBuild: ['assets/css', 'assets/js/*.js'],
-			postBuild: ['build-files/js/templates.js']
+			postBuild: ['<%= jst.compile.dest %>']
 		},
 		// Optimise images for production environment
 		imagemin: {
@@ -53,21 +61,33 @@ module.exports = function(grunt) {
 		jst: {
 			compile: {
 				options: {
-					namespace: "templates",
+					namespace: 'templates',
 					prettify: false,
 					amdWrapper: false,
-					templateSettings: {
-					},
 					processName: function(filename) {
-						//Shortens the file path for the template.
-						return filename.slice(filename.indexOf("templates")+10, filename.length);
+            // Shortens the file path for the template and removes file extension.
+            return filename.slice(filename.indexOf('templates') + 10, filename.length).replace(/\.[^/.]+$/, '');
 					}
 				},
-				files: {
-					'src/js/templates.js': ['src/js/template/*.tpl']
-				}
+        src: ['src/js/tpl/*.tpl'],
+        dest: 'src/js/templates.js'
 			}
 		},
+    // JSHint JS files to flush out any errors
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc',
+        ignores: [
+          // ignore templates
+          '<%= jst.compile.dest %>',
+          'src/js/plugins/*'
+        ]
+      },
+      files: [
+        'Gruntfile.js',
+        'src/js/**/*.js'
+      ]
+    },
 		// Concatinate all the JavaScript files to reduce amount of requests
 		concat: {
 			options: {
@@ -76,9 +96,15 @@ module.exports = function(grunt) {
 			},
 			javascript: {
 				// the files to concatenate
-				src: ['src/js/plugin/*.js', 'src/js/cpt/*.js', 'src/*.js'],
+				src: [
+          'src/js/plugins/*.js',
+          'src/js/app.js',
+          'src/js/helpers.js',
+          'src/js/mod/*.js',
+          'src/js/main.js'
+        ],
 				// the location of the resulting JS file
-				dest: 'assets/js/application.js'
+				dest: 'assets/js/app.js'
 			}
 		},
 		// Minify JavaScript files to reduce page weight
@@ -89,27 +115,19 @@ module.exports = function(grunt) {
 			},
 			javascript: {
 				files: {
-					'assets/js/application.min.js': ['<%= concat.javascript.dest %>']
+					'assets/js/app.min.js': ['<%= concat.javascript.dest %>']
 				}
 			}
 		}
 	});
-
-	// Load plugins
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-contrib-compass');
-	grunt.loadNpmTasks('grunt-contrib-imagemin');
-	grunt.loadNpmTasks('grunt-contrib-jst');
 
 	// Default task(s).
 	grunt.registerTask('default', ['watch']);
 	grunt.registerTask('build-dev', [
 		'clean:build',
 		'compass:development',
-		'jst',
+    'jshint',
+    'jst',
 		'concat:javascript',
 		'uglify:javascript',
 		'imagemin:production'
@@ -118,6 +136,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', [
 		'clean:preBuild',
 		'compass:production',
+    'jshint',
 		'jst',
 		'concat:javascript',
 		'uglify:javascript',
