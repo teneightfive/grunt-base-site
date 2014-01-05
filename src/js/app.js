@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   var App = {
@@ -16,8 +16,9 @@
       // here we are looping round all of the modules in our app.Modules object. We could have an exclude array for modules
       // that we don't want to be immediately initialised. We could initialise them later on in our application lifecycle
 
-      for(var x in App.Modules) {
-        if(App.Modules[x].hasOwnProperty('init')){
+      for (var x in App.Modules) {
+        if (typeof App.Modules[x].init === 'function') {
+          // console.log('true');
           App.Modules[x].init();
         }
       }
